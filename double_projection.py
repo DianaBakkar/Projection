@@ -3,13 +3,19 @@
 import numpy as np
 #Load ops.npy to get metadata for plane 0#
 ops=np.load('ops.npy',allow_pickle=True).item()
+stat=np.load('stat_plane0.npy',allow_pickle=True) #Load suite2p ROI masks
+print(f"Number of detected neurons: {len(stat)}") #Adding this line to print the number of detected neurons
+centroids = np.array([cell['med'][::-1] for cell in stat if 'med' in cell]) #Extract neuron centroids and convert them to Numpy array
 Ly,Lx=ops['Ly'],ops['Lx'] #Image dimensions
 n_frames=ops['nframes']   #Number of frames
 
 #Load ops.npy to get metadata for plane 1#
-ops=np.load('ops_plane1.npy',allow_pickle=True).item()
-Ly1,Lx1=ops['Ly'],ops['Lx'] #Image dimensions
-n_frames1=ops['nframes']   #Number of frames
+ops=np.load('ops.npy',allow_pickle=True).item()
+stat=np.load('stat_plane1.npy',allow_pickle=True) #Load suite2p ROI masks
+print(f"Number of detected neurons: {len(stat)}") #Adding this line to print the number of detected neurons
+centroids = np.array([cell['med'][::-1] for cell in stat if 'med' in cell]) #Extract neuron centroids and convert them to Numpy array
+Ly,Lx=ops['Ly'],ops['Lx'] #Image dimensions
+n_frames=ops['nframes']   #Number of frames
 
 
 #Load the binary file for plane 0#
@@ -35,15 +41,18 @@ np.save('max_projection_plane1.npy',max_projection_plane1)
 #Display the mean projections#
 #plane 0#
 import matplotlib.pyplot as plt
-plt.imshow(mean_projection,cmap='gray') #Display the mean projection as a graysacle image ( try without converting to gray scale)
-plt.title("Mean projection from data.bin")
+plt.imshow(mean_projection,cmap='gray') #Display the mean projection as a graysacle image
+plt.scatter(centroids[:, 0], centroids[:, 1], color='red', s=10, label="Suite2P Neurons")
+plt.title("Mean Projection with Neurons (Plane 0)")
+plt.legend()
 plt.colorbar()
 plt.show()
-    
 
 #plane 1#
-plt.imshow(mean_projection_plane1,cmap='gray') #Display the mean projection as a graysacle image
-plt.title("Mean projection from data_plane1.bin")
+plt.imshow(mean_projection,cmap='gray') #Display the mean projection as a graysacle image
+plt.scatter(centroids[:, 0], centroids[:, 1], color='blue', s=10, label="Suite2P Neurons")
+plt.title("Mean Projection with Neurons (Plane 0)")
+plt.legend()
 plt.colorbar()
 plt.show()
 
