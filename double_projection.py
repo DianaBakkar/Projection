@@ -1,5 +1,6 @@
 ##################First attempt to make projections of 2 image stack into a coordinate system############
 ###############Reconstruct the image stack from data.bin file###########
+##########suite2p saves the coordinates in (y,x) format but matplotlib expects them in (x,y) format thus we swap them########
 import numpy as np
 #Load ops.npy to get metadata for plane 0#
 ops=np.load('ops.npy',allow_pickle=True).item()
