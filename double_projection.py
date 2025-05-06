@@ -40,7 +40,7 @@ plt.colorbar()
 
 
 #Load ops.npy to get metadata for plane 1#
-ops=np.load('ops.npy',allow_pickle=True).item()
+ops=np.load('ops_plane1.npy',allow_pickle=True).item()
 stat=np.load('stat_plane1.npy',allow_pickle=True) #Load suite2p ROI masks
 iscell=np.load('iscell_plane1.npy',allow_pickle=True)
 print(f"Number of detected neurons for plane 1: {len(stat)}") #Adding this line to print the number of detected neurons
